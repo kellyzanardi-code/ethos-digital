@@ -107,7 +107,7 @@ export function Courses() {
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <SectionHeading
           eyebrow="Educação"
-          title="Em breve: cursos práticos de tecnologia"
+          title="Cursos práticos de tecnologia"
           description="A Ethos Cursos está preparando cursos práticos, pensados para ajudar iniciantes a construir bases sólidas em programação e desenvolvimento web."
         />
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -8,7 +8,7 @@ const needs = [
   "Site profissional",
   "Conteúdo para redes sociais",
   "Site + estratégia de redes sociais",
-  "Próximos cursos",
+  "Cursos",
   "Outro",
 ];
 
@@ -50,7 +50,10 @@ export function Contact() {
 
   return (
     <section id="contato" className="relative overflow-hidden surface-navy py-24 lg:py-28">
-      <div className="pointer-events-none absolute inset-0 grid-lines opacity-40" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute inset-0 grid-lines opacity-40"
+        aria-hidden="true"
+      />
       <div className="relative mx-auto grid max-w-6xl gap-14 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
         <div>
           <SectionHeading
@@ -62,8 +65,7 @@ export function Contact() {
           <div className="mt-8 space-y-2 text-sm text-navy-foreground/60">
             <p>E-mail: {siteConfig.email || "a definir"}</p>
             <p>
-              WhatsApp:{" "}
-              {siteConfig.whatsappNumber ? `+${siteConfig.whatsappNumber}` : "a definir"}
+              WhatsApp: {siteConfig.whatsappNumber ? `+${siteConfig.whatsappNumber}` : "a definir"}
             </p>
           </div>
           <a
@@ -83,28 +85,52 @@ export function Contact() {
             <input id="nome" name="nome" required maxLength={100} className={fieldClass} />
           </div>
           <div>
-            <label htmlFor="empresa" className="mb-1.5 block text-sm font-medium text-navy-foreground">
+            <label
+              htmlFor="empresa"
+              className="mb-1.5 block text-sm font-medium text-navy-foreground"
+            >
               Nome do negócio
             </label>
             <input id="empresa" name="empresa" maxLength={120} className={fieldClass} />
           </div>
           <div>
-            <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-navy-foreground">
+            <label
+              htmlFor="email"
+              className="mb-1.5 block text-sm font-medium text-navy-foreground"
+            >
               E-mail
             </label>
-            <input id="email" name="email" type="email" required maxLength={255} className={fieldClass} />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              maxLength={255}
+              className={fieldClass}
+            />
           </div>
           <div>
-            <label htmlFor="telefone" className="mb-1.5 block text-sm font-medium text-navy-foreground">
+            <label
+              htmlFor="telefone"
+              className="mb-1.5 block text-sm font-medium text-navy-foreground"
+            >
               WhatsApp ou telefone
             </label>
             <input id="telefone" name="telefone" type="tel" maxLength={30} className={fieldClass} />
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="necessidade" className="mb-1.5 block text-sm font-medium text-navy-foreground">
+            <label
+              htmlFor="necessidade"
+              className="mb-1.5 block text-sm font-medium text-navy-foreground"
+            >
               Com o que você precisa de ajuda?
             </label>
-            <select id="necessidade" name="necessidade" defaultValue={needs[0]} className={fieldClass}>
+            <select
+              id="necessidade"
+              name="necessidade"
+              defaultValue={needs[0]}
+              className={fieldClass}
+            >
               {needs.map((need) => (
                 <option key={need} value={need} className="text-foreground">
                   {need}
@@ -113,7 +139,10 @@ export function Contact() {
             </select>
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="mensagem" className="mb-1.5 block text-sm font-medium text-navy-foreground">
+            <label
+              htmlFor="mensagem"
+              className="mb-1.5 block text-sm font-medium text-navy-foreground"
+            >
               Mensagem
             </label>
             <textarea

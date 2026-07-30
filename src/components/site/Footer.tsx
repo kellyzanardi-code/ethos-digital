@@ -1,4 +1,5 @@
 import { siteConfig, whatsappLink } from "@/config/site";
+import { Facebook, Instagram, MessageCircle, Youtube } from "lucide-react";
 import { Logo } from "./primitives";
 
 const columns = [
@@ -20,7 +21,7 @@ const columns = [
     ],
   },
   {
-    title: "Próximos cursos",
+    title: "Cursos",
     links: [
       { href: "#cursos", label: "Lógica de programação" },
       { href: "#cursos", label: "HTML e CSS" },
@@ -37,18 +38,45 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Logo tone="light" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-navy-foreground/60">
-              Tecnologia, educação e comunicação estratégica para negócios que querem
-              crescer com clareza.
+              Tecnologia, educação e comunicação estratégica para negócios que querem clareza.
             </p>
-            <div className="mt-5 flex gap-4 text-sm text-navy-foreground/60">
-              <a href={siteConfig.social.instagram || "#contato"} className="hover:text-primary">
-                Instagram
+            <div className="mt-5 flex flex-wrap gap-4 text-sm text-navy-foreground/60">
+              <a
+                href={siteConfig.social.instagram || "#contato"}
+                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Instagram className="h-4 w-4" />
+                <span>Instagram</span>
               </a>
-              <a href={siteConfig.social.linkedin || "#contato"} className="hover:text-primary">
-                LinkedIn
+
+              <a
+                href={siteConfig.social.facebook || "#contato"}
+                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Facebook className="h-4 w-4" />
+                <span>Facebook</span>
               </a>
-              <a href={whatsappLink} className="hover:text-primary">
-                WhatsApp
+
+              <a
+                href={siteConfig.social.youtube || "#contato"}
+                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Youtube className="h-4 w-4" />
+                <span>YouTube</span>
+              </a>
+
+              <a
+                href={whatsappLink}
+                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span>WhatsApp</span>
               </a>
             </div>
           </div>

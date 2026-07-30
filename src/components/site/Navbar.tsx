@@ -7,7 +7,7 @@ const links = [
   { href: "#inicio", label: "Início" },
   { href: "#servicos", label: "Serviços" },
   { href: "#como-funciona", label: "Como funciona" },
-  { href: "#cursos", label: "Próximos cursos" },
+  { href: "#cursos", label: "Cursos" },
   { href: "#sobre", label: "Sobre a Ethos" },
   { href: "#contato", label: "Contato" },
 ];
