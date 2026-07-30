@@ -1,7 +1,9 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import ethosMark from "@/assets/ethos-mark.png";
+import ethosMarkAsset from "@/assets/ethos-mark.png.asset.json";
+
+const ethosMark = ethosMarkAsset.url;
 
 export const actionVariants = cva(
   "inline-flex items-center justify-center gap-2 rounded-md text-sm font-semibold tracking-tight transition-all duration-200 disabled:pointer-events-none disabled:opacity-60",
@@ -106,7 +108,7 @@ export function Logo({
         alt="Ethos Cursos"
         width={40}
         height={40}
-        className="h-9 w-9 object-contain"
+        className="h-10 w-10 object-contain"
       />
       <span className="leading-tight">
         <span
