@@ -1,5 +1,7 @@
-import ethosMark from "@/assets/ethos-mark.png";
+import ethosMarkAsset from "@/assets/ethos-mark.png.asset.json";
 import { SectionHeading } from "./primitives";
+
+const ethosMark = ethosMarkAsset.url;
 
 const points = [
   "Aprendizado prático",
