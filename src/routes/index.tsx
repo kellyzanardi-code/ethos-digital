@@ -10,7 +10,7 @@ import { Trust } from "@/components/site/Trust";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 
-const title = "Ethos Cursos | Sites profissionais e conteúdo estratégico";
+const title = "Ethos Cursos — Sites profissionais e conteúdo estratégico";
 const description =
   "Sites profissionais, conteúdo estratégico para redes sociais e cursos práticos de tecnologia para tornar seu negócio mais visível e competitivo.";
 

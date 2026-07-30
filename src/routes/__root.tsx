@@ -78,12 +78,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ethos Cursos" },
-      {
-        name: "description",
-        content:
-          "Tecnologia, educação e comunicação estratégica para negócios que querem crescer.",
-      },
       { name: "author", content: "Ethos Cursos" },
       { property: "og:site_name", content: "Ethos Cursos" },
       { property: "og:type", content: "website" },
