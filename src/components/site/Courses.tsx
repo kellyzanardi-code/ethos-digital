@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { SectionHeading, actionVariants } from "./primitives";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const courses = [
   {
@@ -28,11 +29,16 @@ const courses = [
 function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
     if (name.trim().length < 2 || !/^\S+@\S+\.\S+$/.test(email.trim())) {
       toast.error("Preencha um nome e um e-mail válidos.");
+      return;
+    }
+    if (!consent) {
+      toast.error("Aceite o consentimento para continuar.");
       return;
     }
     toast.success("Inscrição registrada. Avisaremos assim que o curso abrir.");
@@ -67,6 +73,19 @@ function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) 
           required
           className="h-11 w-full rounded-md border border-input bg-background px-3.5 text-sm outline-none focus-visible:border-primary"
         />
+      </div>
+      <div className="flex items-start gap-3">
+        <Checkbox
+          id={`consentimento-${course}`}
+          checked={consent}
+          onCheckedChange={(checked) => setConsent(checked === true)}
+        />
+        <label
+          htmlFor={`consentimento-${course}`}
+          className="text-xs leading-relaxed text-muted-foreground"
+        >
+          Autorizo o uso do meu nome e e-mail para receber informações sobre este curso.
+        </label>
       </div>
       <button type="submit" className={actionVariants({ size: "lg" }) + " w-full"}>
         Quero ser avisado
