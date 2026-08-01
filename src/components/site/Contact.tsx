@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { siteConfig, whatsappLink } from "@/config/site";
+import { submitLead } from "@/lib/contact";
 import { SectionHeading, actionVariants } from "./primitives";
 
 const needs = [
@@ -40,12 +41,26 @@ export function Contact() {
     }
 
     setSending(true);
-    // TODO: integrar com serviço de e-mail/CRM quando os canais oficiais estiverem definidos.
-    setTimeout(() => {
-      setSending(false);
-      form.reset();
-      toast.success("Mensagem registrada. Entraremos em contato em breve.");
-    }, 500);
+
+    void submitLead({
+      name,
+      businessName: String(data.get("empresa") ?? "").trim() || undefined,
+      email,
+      phone: String(data.get("telefone") ?? "").trim(),
+      helpType: String(data.get("necessidade") ?? "").trim(),
+      message,
+    })
+      .then(() => {
+        form.reset();
+        toast.success("Mensagem registrada. Entraremos em contato em breve.");
+      })
+      .catch((error: unknown) => {
+        console.error(error);
+        toast.error("Não foi possível enviar sua mensagem agora. Tente novamente.");
+      })
+      .finally(() => {
+        setSending(false);
+      });
   }
 
   return (

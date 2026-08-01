@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { SectionHeading, actionVariants } from "./primitives";
 import { Checkbox } from "@/components/ui/checkbox";
+import { submitLead } from "@/lib/contact";
 
 const courses = [
   {
@@ -29,6 +30,7 @@ const courses = [
 function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
   const [consent, setConsent] = useState(false);
 
   function handleSubmit(event: FormEvent) {
@@ -41,8 +43,22 @@ function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) 
       toast.error("Aceite o consentimento para continuar.");
       return;
     }
-    toast.success("Inscrição registrada. Avisaremos assim que o curso abrir.");
-    onDone();
+    void submitLead({
+      name: name.trim(),
+      businessName: undefined,
+      email: email.trim(),
+      phone: whatsapp.trim(),
+      helpType: `Cursos`,
+      message: `Tenho interesse em inscrever-me no curso: ${course}`,
+    })
+      .then(() => {
+        toast.success("Inscrição registrada. Avisaremos assim que o curso abrir.");
+        onDone();
+      })
+      .catch((error: unknown) => {
+        console.error(error);
+        toast.error("Não foi possível registrar sua inscrição agora. Tente novamente.");
+      });
   }
 
   return (
@@ -71,6 +87,23 @@ function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) 
           onChange={(e) => setEmail(e.target.value)}
           maxLength={255}
           required
+          className="h-11 w-full rounded-md border border-input bg-background px-3.5 text-sm outline-none focus-visible:border-primary"
+        />
+      </div>
+      <div>
+        <label
+          htmlFor={`whatsapp-${course}`}
+          className="mb-1.5 block text-sm font-medium text-navy"
+        >
+          WhatsApp
+        </label>
+        <input
+          id={`whatsapp-${course}`}
+          type="tel"
+          value={whatsapp}
+          onChange={(e) => setWhatsapp(e.target.value)}
+          maxLength={30}
+          placeholder="(11) 99999-9999"
           className="h-11 w-full rounded-md border border-input bg-background px-3.5 text-sm outline-none focus-visible:border-primary"
         />
       </div>
