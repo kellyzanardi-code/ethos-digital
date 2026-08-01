@@ -33,8 +33,18 @@ function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) 
   const [whatsapp, setWhatsapp] = useState("");
   const [consent, setConsent] = useState(false);
 
-  function handleSubmit(event: FormEvent) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const website = String(data.get("website") ?? "").trim();
+    const websiteTimestamp = String(data.get("website_timestamp") ?? "").trim();
+
+    if (website || websiteTimestamp) {
+      toast.error("Envio bloqueado por segurança.");
+      return;
+    }
+
     if (name.trim().length < 2 || !/^\S+@\S+\.\S+$/.test(email.trim())) {
       toast.error("Preencha um nome e um e-mail válidos.");
       return;
@@ -106,6 +116,20 @@ function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) 
           placeholder="(11) 99999-9999"
           className="h-11 w-full rounded-md border border-input bg-background px-3.5 text-sm outline-none focus-visible:border-primary"
         />
+      </div>
+      <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label htmlFor={`website-${course}`} className="sr-only">
+          Website
+        </label>
+        <input
+          id={`website-${course}`}
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          defaultValue=""
+        />
+        <input name="website_timestamp" type="hidden" value="" />
       </div>
       <div className="flex items-start gap-3">
         <Checkbox

@@ -5,6 +5,7 @@ export type LeadPayload = {
   phone: string;
   helpType: string;
   message: string;
+  website?: string;
 };
 
 export async function submitLead(payload: LeadPayload) {
@@ -13,6 +14,10 @@ export async function submitLead(payload: LeadPayload) {
   if (!endpoint) {
     console.info("[submitLead] endpoint not configured", payload);
     return { ok: true, mode: "mock" };
+  }
+
+  if (payload.website) {
+    return { ok: false, blocked: true, reason: "honeypot" };
   }
 
   const response = await fetch(endpoint, {

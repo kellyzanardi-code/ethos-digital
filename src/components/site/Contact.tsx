@@ -26,6 +26,13 @@ export function Contact() {
     const name = String(data.get("nome") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const message = String(data.get("mensagem") ?? "").trim();
+    const website = String(data.get("website") ?? "").trim();
+    const websiteTimestamp = String(data.get("website_timestamp") ?? "").trim();
+
+    if (website || websiteTimestamp) {
+      toast.error("Envio bloqueado por segurança.");
+      return;
+    }
 
     if (name.length < 2 || name.length > 100) {
       toast.error("Informe um nome válido.");
@@ -168,6 +175,20 @@ export function Contact() {
               maxLength={1000}
               className={fieldClass.replace("h-12", "min-h-32 py-3")}
             />
+          </div>
+          <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+            <label htmlFor="website-contato" className="sr-only">
+              Website
+            </label>
+            <input
+              id="website-contato"
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              defaultValue=""
+            />
+            <input name="website_timestamp" type="hidden" value="" />
           </div>
           <button
             type="submit"
