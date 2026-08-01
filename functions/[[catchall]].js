@@ -6,7 +6,7 @@ export async function onRequest(context) {
   // Caminhos com extensão (.js, .css, .png, .svg, etc.) são servidos normalmente.
   if (!url.pathname.match(/\.[a-zA-Z0-9]+$/)) {
     return context.env.ASSETS.fetch(
-      new Request(new URL("/index.html", url.origin), context.request)
+      new Request(new URL("/index.html", url.origin), context.request),
     );
   }
 
