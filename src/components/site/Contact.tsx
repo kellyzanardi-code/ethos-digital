@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
+import { Checkbox } from "@/components/ui/checkbox";
 import { siteConfig, whatsappLink } from "@/config/site";
 import { submitLead } from "@/lib/contact";
 import { SectionHeading, actionVariants } from "./primitives";
@@ -15,9 +16,27 @@ const needs = [
 
 const fieldClass =
   "h-12 w-full rounded-md border border-navy-foreground/20 bg-navy-deep px-4 text-sm text-navy-foreground placeholder:text-navy-foreground/40 outline-none transition-colors focus-visible:border-primary";
+const selectClass =
+  "h-12 w-full rounded-md border border-navy-foreground/20 bg-navy-deep px-4 text-sm text-[#f5f7ff] placeholder:text-[#f5f7ff]/70 outline-none transition-colors focus-visible:border-primary";
+
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+
+  if (digits.length <= 2) {
+    return digits;
+  }
+
+  if (digits.length <= 7) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  }
+
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
 
 export function Contact() {
   const [sending, setSending] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,8 +61,12 @@ export function Contact() {
       toast.error("Informe um e-mail válido.");
       return;
     }
-    if (message.length < 5 || message.length > 1000) {
+    if (message.length < 5 || message.length > 2000) {
       toast.error("Escreva uma mensagem com pelo menos 5 caracteres.");
+      return;
+    }
+    if (!consent) {
+      toast.error("Aceite o consentimento para continuar.");
       return;
     }
 
@@ -53,7 +76,7 @@ export function Contact() {
       name,
       businessName: String(data.get("empresa") ?? "").trim() || undefined,
       email,
-      phone: String(data.get("telefone") ?? "").trim(),
+      phone: phone.trim(),
       helpType: String(data.get("necessidade") ?? "").trim(),
       message,
     })
@@ -85,10 +108,24 @@ export function Contact() {
             description="Conte o que o seu negócio precisa e vamos identificar o melhor próximo passo para o seu site, seu conteúdo ou sua jornada de educação em tecnologia."
           />
           <div className="mt-8 space-y-2 text-sm text-navy-foreground/60">
-            <p>E-mail: {siteConfig.email || "a definir"}</p>
-            <p>
-              WhatsApp: {siteConfig.whatsappNumber ? `+${siteConfig.whatsappNumber}` : "a definir"}
-            </p>
+            <div>
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="inline-flex items-center gap-2 font-medium text-navy-foreground transition-colors hover:text-primary"
+              >
+                E-mail: {siteConfig.email || "a definir"}
+              </a>
+            </div>
+            <div>
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 font-medium text-navy-foreground transition-colors hover:text-primary"
+              >
+                WhatsApp: {siteConfig.whatsappNumber ? siteConfig.whatsappNumber : "a definir"}
+              </a>
+            </div>
           </div>
           <a
             href={whatsappLink}
@@ -113,7 +150,7 @@ export function Contact() {
             >
               Nome do negócio
             </label>
-            <input id="empresa" name="empresa" maxLength={120} className={fieldClass} />
+            <input id="empresa" name="empresa" maxLength={150} className={fieldClass} />
           </div>
           <div>
             <label
@@ -138,7 +175,16 @@ export function Contact() {
             >
               WhatsApp ou telefone
             </label>
-            <input id="telefone" name="telefone" type="tel" maxLength={30} className={fieldClass} />
+            <input
+              id="telefone"
+              name="telefone"
+              type="tel"
+              value={phone}
+              onChange={(event) => setPhone(formatPhone(event.target.value))}
+              maxLength={15}
+              placeholder="(11) 99999-9999"
+              className={fieldClass}
+            />
           </div>
           <div className="sm:col-span-2">
             <label
@@ -147,14 +193,12 @@ export function Contact() {
             >
               Com o que você precisa de ajuda?
             </label>
-            <select
-              id="necessidade"
-              name="necessidade"
-              defaultValue={needs[0]}
-              className={fieldClass}
-            >
+            <select id="necessidade" name="necessidade" defaultValue="" className={selectClass}>
+              <option value="" disabled className="bg-navy-deep text-[#f5f7ff]/70">
+                Selecione uma opção
+              </option>
               {needs.map((need) => (
-                <option key={need} value={need} className="text-foreground">
+                <option key={need} value={need} className="bg-navy-deep text-[#f5f7ff]">
                   {need}
                 </option>
               ))}
@@ -172,9 +216,19 @@ export function Contact() {
               name="mensagem"
               rows={5}
               required
-              maxLength={1000}
+              maxLength={2000}
               className={fieldClass.replace("h-12", "min-h-32 py-3")}
             />
+          </div>
+          <div className="sm:col-span-2 flex items-start gap-3 rounded-md border border-white/10 bg-white/5 px-4 py-3">
+            <Checkbox
+              id="consentimento-contato"
+              checked={consent}
+              onCheckedChange={(checked) => setConsent(checked === true)}
+            />
+            <label htmlFor="consentimento-contato" className="text-sm leading-relaxed text-navy-foreground/80">
+              Autorizo o uso dos meus dados para receber retorno sobre esta solicitação.
+            </label>
           </div>
           <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
             <label htmlFor="website-contato" className="sr-only">

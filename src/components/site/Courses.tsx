@@ -27,6 +27,20 @@ const courses = [
   },
 ];
 
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+
+  if (digits.length <= 2) {
+    return digits;
+  }
+
+  if (digits.length <= 7) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  }
+
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
 function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -111,8 +125,8 @@ function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) 
           id={`whatsapp-${course}`}
           type="tel"
           value={whatsapp}
-          onChange={(e) => setWhatsapp(e.target.value)}
-          maxLength={30}
+          onChange={(event) => setWhatsapp(formatPhone(event.target.value))}
+          maxLength={15}
           placeholder="(11) 99999-9999"
           className="h-11 w-full rounded-md border border-input bg-background px-3.5 text-sm outline-none focus-visible:border-primary"
         />
