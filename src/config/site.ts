@@ -4,15 +4,18 @@ export const siteConfig = {
   name: "Ethos Cursos",
   // Ex.: "5511999999999" (somente números, com DDI e DDD)
   whatsappNumber: "5511970570281",
+  whatsappShortLink: "https://wa.me/message/GZTIWLGET7PQG1",
   email: "ethoscursos.ead@gmail.com",
   phoneLabel: "Telefone a definir",
   social: {
     instagram: "https://www.instagram.com/ethoscursos.ead",
-    facebook: "https://www.facebook.com/profile.php?id=61562790657936",
+    facebook: "https://www.facebook.com/ethoscursos",
     youtube: "https://www.youtube.com/@ethoscursos",
   },
 } as const;
 
-export const whatsappLink = siteConfig.whatsappNumber
-  ? `https://wa.me/${siteConfig.whatsappNumber}`
-  : "#contato";
+export const whatsappLink = siteConfig.whatsappShortLink
+  ? siteConfig.whatsappShortLink
+  : siteConfig.whatsappNumber
+    ? `https://wa.me/${siteConfig.whatsappNumber}`
+    : "#contato";

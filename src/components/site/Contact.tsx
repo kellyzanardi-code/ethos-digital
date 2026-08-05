@@ -82,6 +82,8 @@ export function Contact() {
     })
       .then(() => {
         form.reset();
+        setPhone("");
+        setConsent(false);
         toast.success("Mensagem registrada. Entraremos em contato em breve.");
       })
       .catch((error: unknown) => {
@@ -226,7 +228,10 @@ export function Contact() {
               checked={consent}
               onCheckedChange={(checked) => setConsent(checked === true)}
             />
-            <label htmlFor="consentimento-contato" className="text-sm leading-relaxed text-navy-foreground/80">
+            <label
+              htmlFor="consentimento-contato"
+              className="text-sm leading-relaxed text-navy-foreground/80"
+            >
               Autorizo o uso dos meus dados para receber retorno sobre esta solicitação.
             </label>
           </div>
