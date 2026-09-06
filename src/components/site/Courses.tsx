@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from "react";
+import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { ArrowRight } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -11,21 +13,8 @@ import {
 import { SectionHeading, actionVariants } from "./primitives";
 import { Checkbox } from "@/components/ui/checkbox";
 import { submitLead } from "@/lib/contact";
-
-const courses = [
-  {
-    title: "Lógica de programação e algoritmos",
-    text: "Aprenda a pensar de forma lógica, resolver problemas e construir a base necessária para se tornar uma pessoa desenvolvedora confiante.",
-  },
-  {
-    title: "Introdução ao desenvolvimento web com HTML e CSS",
-    text: "Entenda a estrutura e a apresentação visual por trás dos sites modernos utilizando HTML e CSS.",
-  },
-  {
-    title: "JavaScript aplicado ao desenvolvimento web",
-    text: "Adicione interatividade, comportamento e funcionalidade real às páginas web com JavaScript.",
-  },
-];
+import { cn } from "@/lib/utils";
+import { courses, type Course } from "@/config/courses";
 
 function formatPhone(value: string) {
   const digits = value.replace(/\D/g, "").slice(0, 11);
@@ -165,28 +154,60 @@ function NotifyForm({ course, onDone }: { course: string; onDone: () => void }) 
   );
 }
 
-function CourseCard({ title, text }: { title: string; text: string }) {
+function CourseCard({ course }: { course: Course }) {
   const [open, setOpen] = useState(false);
+  const isAvailable = course.status === "available";
+
+  const badge = (
+    <span
+      className={cn(
+        "inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.16em]",
+        isAvailable ? "bg-primary/15 text-primary" : "bg-gold/20 text-navy",
+      )}
+    >
+      {isAvailable ? "Matrículas abertas" : "Em breve"}
+    </span>
+  );
+
+  const title = <h3 className="mt-5 text-lg font-bold leading-snug text-navy">{course.name}</h3>;
+
+  const text = (
+    <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+      {course.description}
+    </p>
+  );
 
   return (
     <article className="flex flex-col rounded-lg border border-border bg-card p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
-      <span className="inline-flex w-fit items-center gap-2 rounded-full bg-gold/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy">
-        Em breve
-      </span>
-      <h3 className="mt-5 text-lg font-bold leading-snug text-navy">{title}</h3>
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{text}</p>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger className={actionVariants({ variant: "outlineDark" }) + " mt-7 w-full"}>
-          Avise-me
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="text-navy">Avise-me sobre este curso</DialogTitle>
-            <DialogDescription>{title}</DialogDescription>
-          </DialogHeader>
-          <NotifyForm course={title} onDone={() => setOpen(false)} />
-        </DialogContent>
-      </Dialog>
+      {isAvailable ? (
+        <Link to="/curso/$slug" params={{ slug: course.slug }} className="flex h-full flex-col">
+          {badge}
+          {title}
+          {text}
+          <span className={actionVariants({ size: "md" }) + " mt-7 w-full"}>
+            Ver página do curso
+            <ArrowRight size={16} aria-hidden="true" />
+          </span>
+        </Link>
+      ) : (
+        <>
+          {badge}
+          {title}
+          {text}
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger className={actionVariants({ variant: "outlineDark" }) + " mt-7 w-full"}>
+              Avise-me
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="text-navy">Avise-me sobre este curso</DialogTitle>
+                <DialogDescription>{course.name}</DialogDescription>
+              </DialogHeader>
+              <NotifyForm course={course.name} onDone={() => setOpen(false)} />
+            </DialogContent>
+          </Dialog>
+        </>
+      )}
     </article>
   );
 }
@@ -202,7 +223,7 @@ export function Courses() {
         />
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {courses.map((course) => (
-            <CourseCard key={course.title} {...course} />
+            <CourseCard key={course.slug} course={course} />
           ))}
         </div>
       </div>
