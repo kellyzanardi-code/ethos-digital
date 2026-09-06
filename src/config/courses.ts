@@ -61,7 +61,7 @@ export const courses: Course[] = [
     headline: "Lógica de Programação e Algoritmos",
     description:
       "Aprenda a pensar de forma lógica, resolver problemas e construir a base necessária para se tornar uma pessoa desenvolvedora confiante.",
-    checkoutUrl: "https://pay.kiwify.com.br/FT9By55",
+    checkoutUrl: "https://pay.kiwify.com.br/sVX5hU4",
     ctaLabel: "Garantir minha vaga",
     trustItems: [
       "Acesso vitalício",
