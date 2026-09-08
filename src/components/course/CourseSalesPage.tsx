@@ -478,7 +478,7 @@ function CourseFaq({ course }: { course: Course }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-background pb-24 lg:pb-28">
+    <section id="faq" className="bg-background py-24 lg:py-28">
       <div className="mx-auto max-w-3xl px-5 lg:px-8">
         <Reveal>
           <SectionHeading
