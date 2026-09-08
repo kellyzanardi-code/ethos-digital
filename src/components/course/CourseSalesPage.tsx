@@ -609,7 +609,7 @@ function CourseContact() {
   ];
 
   return (
-    <section id="contato" className="bg-background pb-24 lg:pb-28">
+    <section id="contato" className="bg-background py-24 lg:py-28">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <Reveal>
           <SectionHeading
