@@ -24,7 +24,7 @@ export interface CourseFaqItem {
 }
 
 export interface CourseOffer {
-  /** Identificador único da oferta (ex.: "lancamento", "black-friday", "padrao") */
+  /** Identificador único da oferta (ex.: "lancamento", "promocao") */
   id: string;
   /** true = oferta ativa quando VITE_ACTIVE_OFFER_ID não estiver definido */
   isActive?: boolean;
@@ -42,8 +42,8 @@ export interface CourseOffer {
   urgencyText?: string;
   /** Texto do botão de compra (opcional) */
   ctaLabel?: string;
-  /** Link de checkout próprio (fallback; o principal vem de VITE_CHECKOUT_URL) */
-  checkoutUrl?: string;
+  /** Link de checkout DESTA oferta (Kiwify) — cada oferta tem o seu */
+  checkoutUrl: string;
 }
 
 export interface Course {
@@ -210,6 +210,7 @@ export const courses: Course[] = [
         discountBadge: "",
         urgencyText: "Oferta de lançamento por tempo limitado.",
         ctaLabel: "Garantir minha vaga por R$ 47,00",
+        checkoutUrl: "https://pay.kiwify.com.br/sVX5hU4",
       },
       {
         id: "promocao",
@@ -220,6 +221,7 @@ export const courses: Course[] = [
         discountBadge: "",
         urgencyText: "Oferta por tempo limitado.",
         ctaLabel: "Garantir minha vaga por R$ 67,00",
+        checkoutUrl: "https://pay.kiwify.com.br/kkaoe1B",
       },
     ],
     meta: {
@@ -283,16 +285,18 @@ export function getActiveOffer(course: Course): CourseOffer | undefined {
 }
 
 /**
- * Retorna o link de checkout do curso, nesta ordem:
- * 1) env específica do curso: VITE_CHECKOUT_URL_<SLUG em CAIXA_ALTA>
- * 2) checkout próprio da oferta ativa (se houver)
- * 3) checkoutUrl do curso (source of truth)
+ * Retorna o link de checkout vigente, nesta ordem:
+ * 1) checkoutUrl da oferta ativa (cada oferta tem o seu link)
+ * 2) env específica do curso: VITE_CHECKOUT_URL_<SLUG> (fallback opcional)
+ * 3) checkoutUrl do curso (último fallback)
  */
 export function getCourseCheckoutUrl(course: Course): string {
+  const active = getActiveOffer(course);
+  if (active?.checkoutUrl) return active.checkoutUrl;
+
   const envKey = `VITE_CHECKOUT_URL_${course.slug.toUpperCase().replace(/-/g, "_")}`;
   const fromEnv = (import.meta.env[envKey] as string | undefined)?.trim();
   if (fromEnv) return fromEnv;
-  const active = getActiveOffer(course);
-  if (active?.checkoutUrl) return active.checkoutUrl;
+
   return course.checkoutUrl ?? "#";
 }
