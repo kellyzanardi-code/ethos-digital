@@ -27,7 +27,7 @@ import {
 import { cn } from "@/lib/utils";
 import { actionVariants, Logo, SectionHeading } from "@/components/site/primitives";
 import { siteConfig, whatsappLink } from "@/config/site";
-import type { Course } from "@/config/courses";
+import { getActiveOffer, getCheckoutUrl, type Course } from "@/config/courses";
 
 const websiteUrl = "https://ethoscursos.com.br/";
 const brandYear = new Date().getFullYear();
@@ -89,16 +89,21 @@ function Reveal({
   );
 }
 
-/* ---------- Header ---------- */
-const navLinks = [
-  { href: "#curso", label: "Curso" },
-  { href: "#para-quem", label: "Para quem" },
-  { href: "#conteudo", label: "Conteúdo" },
-  { href: "#faq", label: "Dúvidas" },
-  { href: "#contato", label: "Contato" },
-];
+function getNavLinks(course: Course) {
+  const links = [
+    { href: "#curso", label: "Curso" },
+    { href: "#para-quem", label: "Para quem" },
+    { href: "#conteudo", label: "Conteúdo" },
+  ];
+  if (getActiveOffer(course)) {
+    links.push({ href: "#oferta", label: "Oferta" });
+  }
+  links.push({ href: "#faq", label: "Dúvidas" }, { href: "#contato", label: "Contato" });
+  return links;
+}
 
 function CourseHeader({ course }: { course: Course }) {
+  const links = getNavLinks(course);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -123,7 +128,7 @@ function CourseHeader({ course }: { course: Course }) {
 
         <nav aria-label="Navegação do curso" className="hidden lg:block">
           <ul className="flex items-center gap-7">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -138,7 +143,7 @@ function CourseHeader({ course }: { course: Course }) {
 
         <div className="hidden lg:block">
           <a
-            href={course.checkoutUrl}
+            href={getCheckoutUrl(course)}
             target="_blank"
             rel="noreferrer"
             className={actionVariants({ size: "sm" })}
@@ -165,7 +170,7 @@ function CourseHeader({ course }: { course: Course }) {
           className="border-t border-navy-foreground/10 bg-navy px-5 pb-6 pt-2 lg:hidden"
         >
           <ul className="flex flex-col">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -178,7 +183,7 @@ function CourseHeader({ course }: { course: Course }) {
             ))}
           </ul>
           <a
-            href={course.checkoutUrl}
+            href={getCheckoutUrl(course)}
             target="_blank"
             rel="noreferrer"
             className={cn(actionVariants({ size: "lg" }), "mt-5 w-full")}
@@ -212,7 +217,7 @@ function CourseHero({ course }: { course: Course }) {
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href={course.checkoutUrl}
+              href={getCheckoutUrl(course)}
               target="_blank"
               rel="noreferrer"
               className={actionVariants({ size: "lg" })}
@@ -334,59 +339,54 @@ function CourseModules({ course }: { course: Course }) {
 
 /* ---------- Oferta ---------- */
 function CourseOffer({ course }: { course: Course }) {
-  const offer = course.offer;
+  const offer = getActiveOffer(course);
   if (!offer) return null;
 
   return (
-    <section id="oferta" className="bg-background pb-24 lg:pb-28">
-      <div className="mx-auto max-w-6xl px-5 lg:px-8">
-        <Reveal>
-          <div className="surface-navy relative overflow-hidden rounded-lg px-8 py-14 text-center lg:px-14">
-            <div
-              className="grid-lines pointer-events-none absolute inset-0 opacity-25"
-              aria-hidden="true"
-            />
-            <div className="relative mx-auto max-w-2xl">
-              {offer.discountBadge ? (
-                <span className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground">
-                  {offer.discountBadge}
-                </span>
-              ) : null}
-              <h2 className="mt-6 font-display text-3xl font-bold leading-[1.12] tracking-tight text-navy-foreground sm:text-4xl">
-                Oferta especial de lançamento
-              </h2>
-              <div className="mt-8">
-                <p className="text-lg text-navy-foreground/60">
-                  De{" "}
-                  <span className="line-through decoration-primary decoration-2">
-                    {offer.fullPrice}
-                  </span>{" "}
-                  por apenas
-                </p>
-                <p className="mt-2 font-display text-6xl font-bold tracking-tight text-primary sm:text-7xl">
-                  {offer.offerPrice}
-                </p>
-                {offer.installments ? (
-                  <p className="mt-2 text-sm text-navy-foreground/70">{offer.installments}</p>
-                ) : null}
-              </div>
-              <a
-                href={course.checkoutUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={actionVariants({ size: "lg" }) + " mt-10 w-full sm:w-auto"}
-              >
-                {offer.ctaLabel ?? course.ctaLabel ?? "Garantir minha vaga"}
-                <ArrowRight size={18} aria-hidden="true" />
-              </a>
-              {offer.urgencyText ? (
-                <p className="mx-auto mt-5 max-w-md text-xs leading-relaxed text-navy-foreground/55">
-                  {offer.urgencyText}
-                </p>
-              ) : null}
-            </div>
-          </div>
-        </Reveal>
+    <section id="oferta" className="surface-navy relative overflow-hidden py-24 lg:py-28">
+      <div
+        className="grid-lines pointer-events-none absolute inset-0 opacity-25"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto max-w-3xl px-5 text-center lg:px-8">
+        <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+          Oferta vigente
+        </span>
+        {offer.discountBadge ? (
+          <span className="ml-2 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground">
+            {offer.discountBadge}
+          </span>
+        ) : null}
+        <h2 className="mt-6 font-display text-3xl font-bold leading-[1.12] tracking-tight text-navy-foreground sm:text-4xl">
+          Oferta especial
+        </h2>
+        <div className="mt-8">
+          <p className="text-lg text-navy-foreground/60">
+            De{" "}
+            <span className="line-through decoration-primary decoration-2">{offer.fullPrice}</span>{" "}
+            por apenas
+          </p>
+          <p className="mt-2 font-display text-6xl font-bold tracking-tight text-primary sm:text-7xl">
+            {offer.offerPrice}
+          </p>
+          {offer.installments ? (
+            <p className="mt-2 text-sm text-navy-foreground/70">{offer.installments}</p>
+          ) : null}
+        </div>
+        <a
+          href={getCheckoutUrl(course)}
+          target="_blank"
+          rel="noreferrer"
+          className={actionVariants({ size: "lg" }) + " mt-10 w-full sm:w-auto"}
+        >
+          {offer.ctaLabel ?? course.ctaLabel ?? "Garantir minha vaga"}
+          <ArrowRight size={18} aria-hidden="true" />
+        </a>
+        {offer.urgencyText ? (
+          <p className="mx-auto mt-5 max-w-md text-xs leading-relaxed text-navy-foreground/55">
+            {offer.urgencyText}
+          </p>
+        ) : null}
       </div>
     </section>
   );
@@ -542,7 +542,7 @@ function CourseCta({ course }: { course: Course }) {
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href={course.checkoutUrl}
+              href={getCheckoutUrl(course)}
               target="_blank"
               rel="noreferrer"
               className={actionVariants({ size: "lg" })}
@@ -651,7 +651,8 @@ function CourseContact() {
 }
 
 /* ---------- Rodapé ---------- */
-function CourseFooter() {
+function CourseFooter({ course }: { course: Course }) {
+  const links = getNavLinks(course);
   return (
     <footer className="surface-navy border-t border-navy-foreground/10 py-14">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
@@ -667,7 +668,7 @@ function CourseFooter() {
               Navegação
             </p>
             <ul className="mt-4 space-y-2.5 text-sm">
-              {navLinks.map((link) => (
+              {links.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -744,14 +745,14 @@ export function CourseSalesPage({ course }: { course: Course }) {
         <CourseHero course={course} />
         <CourseAudience course={course} />
         <CourseModules course={course} />
-        <CourseOffer course={course} />
         <CourseHighlights course={course} />
+        <CourseOffer course={course} />
         <CourseGuarantee />
         <CourseFaq course={course} />
         <CourseCta course={course} />
         <CourseContact />
       </main>
-      <CourseFooter />
+      <CourseFooter course={course} />
     </div>
   );
 }

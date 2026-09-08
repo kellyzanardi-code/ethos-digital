@@ -4,6 +4,8 @@
 // Para criar a página de um novo curso: adicione um objeto nesta lista
 // com status "available" e a rota /curso/:slug passa a funcionar.
 
+import { env } from "./env";
+
 export type CourseStatus = "available" | "coming-soon";
 
 export interface CourseModule {
@@ -22,6 +24,12 @@ export interface CourseFaqItem {
 }
 
 export interface CourseOffer {
+  /** Identificador único da oferta (ex.: "lancamento", "black-friday", "padrao") */
+  id: string;
+  /** true = oferta ativa quando VITE_ACTIVE_OFFER_ID não estiver definido */
+  isActive?: boolean;
+  /** Nome legível para identificar a oferta (ex.: "Lançamento") */
+  label?: string;
   /** Preço cheio — exibido riscado */
   fullPrice: string;
   /** Preço da oferta vigente */
@@ -34,6 +42,8 @@ export interface CourseOffer {
   urgencyText?: string;
   /** Texto do botão de compra (opcional) */
   ctaLabel?: string;
+  /** Link de checkout próprio (fallback; o principal vem de VITE_CHECKOUT_URL) */
+  checkoutUrl?: string;
 }
 
 export interface Course {
@@ -63,8 +73,8 @@ export interface Course {
   highlights: CourseCard[];
   /** Perguntas frequentes */
   faq: CourseFaqItem[];
-  /** Oferta vigente — se ausente, a seção não aparece */
-  offer?: CourseOffer;
+  /** Ofertas cadastradas — a ativa é escolhida por VITE_ACTIVE_OFFER_ID, isActive ou a primeira */
+  offers: CourseOffer[];
   /** Metadados de SEO */
   meta: { title: string; description: string };
 }
@@ -189,18 +199,32 @@ export const courses: Course[] = [
           "Você tem 7 dias de garantia incondicional: se sentir que não é para você, basta solicitar o reembolso na Kiwify e devolvemos 100% do valor.",
       },
     ],
-    offer: {
-      fullPrice: "R$ 97,00",
-      offerPrice: "R$ 47,00",
-      installments: "",
-      discountBadge: "",
-      urgencyText: "Oferta  de lançamento por tempo limitado.",
-      ctaLabel: "Garantir minha vaga por R$ 47,00",
-    },
+    offers: [
+      {
+        id: "lancamento",
+        label: "Lançamento",
+        isActive: true,
+        fullPrice: "R$ 97,00",
+        offerPrice: "R$ 47,00",
+        installments: "",
+        discountBadge: "",
+        urgencyText: "Oferta de lançamento por tempo limitado.",
+        ctaLabel: "Garantir minha vaga por R$ 47,00",
+      },
+      {
+        id: "promocao",
+        label: "Promoção",
+        fullPrice: "R$ 97,00",
+        offerPrice: "R$ 67,00",
+        installments: "",
+        discountBadge: "",
+        urgencyText: "Oferta por tempo limitado.",
+        ctaLabel: "Garantir minha vaga por R$ 67,00",
+      },
+    ],
     meta: {
-      title: "Lógica de Programação e Algoritmos — Ethos Cursos",
-      description:
-        "Curso online de Lógica de Programação e Algoritmos: aprenda a pensar de forma lógica, resolver problemas e construir a base para se tornar uma pessoa desenvolvedora. Acesso vitalício e certificado.",
+      title: "",
+      description: "",
     },
   },
   {
@@ -221,6 +245,7 @@ export const courses: Course[] = [
       description:
         "Curso de HTML e CSS da Ethos Cursos: entenda a estrutura e a apresentação visual por trás dos sites modernos.",
     },
+    offers: [],
   },
   {
     slug: "javascript",
@@ -240,9 +265,25 @@ export const courses: Course[] = [
       description:
         "Curso de JavaScript da Ethos Cursos: adicione interatividade e funcionalidade real às páginas web.",
     },
+    offers: [],
   },
 ];
 
 export function getCourseBySlug(slug: string): Course | undefined {
   return courses.find((course) => course.slug === slug);
+}
+
+/** Retorna a oferta ativa: VITE_ACTIVE_OFFER_ID → isActive → primeira cadastrada. */
+export function getActiveOffer(course: Course): CourseOffer | undefined {
+  if (env.activeOfferId) {
+    const match = course.offers.find((offer) => offer.id === env.activeOfferId);
+    if (match) return match;
+  }
+  return course.offers.find((offer) => offer.isActive) ?? course.offers[0];
+}
+
+/** Retorna o link de checkout: VITE_CHECKOUT_URL → oferta ativa → curso. */
+export function getCheckoutUrl(course: Course): string {
+  if (env.checkoutUrl) return env.checkoutUrl;
+  return getActiveOffer(course)?.checkoutUrl ?? course.checkoutUrl ?? "#";
 }
