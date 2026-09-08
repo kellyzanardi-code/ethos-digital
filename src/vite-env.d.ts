@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_CHECKOUT_URL?: string;
   readonly VITE_ACTIVE_OFFER_ID?: string;
+  readonly VITE_CONTACT_ENDPOINT?: string;
 }
 
 interface ImportMeta {

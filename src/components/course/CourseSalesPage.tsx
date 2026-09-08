@@ -27,7 +27,7 @@ import {
 import { cn } from "@/lib/utils";
 import { actionVariants, Logo, SectionHeading } from "@/components/site/primitives";
 import { siteConfig, whatsappLink } from "@/config/site";
-import { getActiveOffer, getCheckoutUrl, type Course } from "@/config/courses";
+import { getActiveOffer, getCourseCheckoutUrl, type Course } from "@/config/courses";
 
 const websiteUrl = "https://ethoscursos.com.br/";
 const brandYear = new Date().getFullYear();
@@ -143,7 +143,7 @@ function CourseHeader({ course }: { course: Course }) {
 
         <div className="hidden lg:block">
           <a
-            href={getCheckoutUrl(course)}
+            href={getCourseCheckoutUrl(course)}
             target="_blank"
             rel="noreferrer"
             className={actionVariants({ size: "sm" })}
@@ -183,7 +183,7 @@ function CourseHeader({ course }: { course: Course }) {
             ))}
           </ul>
           <a
-            href={getCheckoutUrl(course)}
+            href={getCourseCheckoutUrl(course)}
             target="_blank"
             rel="noreferrer"
             className={cn(actionVariants({ size: "lg" }), "mt-5 w-full")}
@@ -217,7 +217,7 @@ function CourseHero({ course }: { course: Course }) {
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href={getCheckoutUrl(course)}
+              href={getCourseCheckoutUrl(course)}
               target="_blank"
               rel="noreferrer"
               className={actionVariants({ size: "lg" })}
@@ -343,7 +343,7 @@ function CourseOffer({ course }: { course: Course }) {
   if (!offer) return null;
 
   return (
-    <section id="oferta" className="surface-navy relative overflow-hidden py-24 lg:py-28">
+    <section id="oferta" className="surface-navy relative overflow-hidden py-24 lg:py-32">
       <div
         className="grid-lines pointer-events-none absolute inset-0 opacity-25"
         aria-hidden="true"
@@ -374,7 +374,7 @@ function CourseOffer({ course }: { course: Course }) {
           ) : null}
         </div>
         <a
-          href={getCheckoutUrl(course)}
+          href={getCourseCheckoutUrl(course)}
           target="_blank"
           rel="noreferrer"
           className={actionVariants({ size: "lg" }) + " mt-10 w-full sm:w-auto"}
@@ -387,6 +387,17 @@ function CourseOffer({ course }: { course: Course }) {
             {offer.urgencyText}
           </p>
         ) : null}
+
+        {/* Garantia integrada à oferta — nada de caixa flutuante */}
+        <div className="mx-auto mt-12 flex max-w-xl flex-col items-center gap-3 border-t border-navy-foreground/10 pt-8 sm:flex-row sm:justify-center">
+          <ShieldCheck size={28} className="shrink-0 text-primary" aria-hidden="true" />
+          <p className="text-sm leading-relaxed text-navy-foreground/70">
+            <strong className="font-semibold text-navy-foreground">
+              Garantia incondicional de 7 dias.
+            </strong>{" "}
+            Se não for para você, devolvemos 100% do valor — sem perguntas.
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -542,7 +553,7 @@ function CourseCta({ course }: { course: Course }) {
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href={getCheckoutUrl(course)}
+              href={getCourseCheckoutUrl(course)}
               target="_blank"
               rel="noreferrer"
               className={actionVariants({ size: "lg" })}
@@ -747,7 +758,6 @@ export function CourseSalesPage({ course }: { course: Course }) {
         <CourseModules course={course} />
         <CourseHighlights course={course} />
         <CourseOffer course={course} />
-        <CourseGuarantee />
         <CourseFaq course={course} />
         <CourseCta course={course} />
         <CourseContact />

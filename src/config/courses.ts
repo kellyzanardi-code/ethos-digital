@@ -282,8 +282,17 @@ export function getActiveOffer(course: Course): CourseOffer | undefined {
   return course.offers.find((offer) => offer.isActive) ?? course.offers[0];
 }
 
-/** Retorna o link de checkout: VITE_CHECKOUT_URL → oferta ativa → curso. */
-export function getCheckoutUrl(course: Course): string {
-  if (env.checkoutUrl) return env.checkoutUrl;
-  return getActiveOffer(course)?.checkoutUrl ?? course.checkoutUrl ?? "#";
+/**
+ * Retorna o link de checkout do curso, nesta ordem:
+ * 1) env específica do curso: VITE_CHECKOUT_URL_<SLUG em CAIXA_ALTA>
+ * 2) checkout próprio da oferta ativa (se houver)
+ * 3) checkoutUrl do curso (source of truth)
+ */
+export function getCourseCheckoutUrl(course: Course): string {
+  const envKey = `VITE_CHECKOUT_URL_${course.slug.toUpperCase().replace(/-/g, "_")}`;
+  const fromEnv = (import.meta.env[envKey] as string | undefined)?.trim();
+  if (fromEnv) return fromEnv;
+  const active = getActiveOffer(course);
+  if (active?.checkoutUrl) return active.checkoutUrl;
+  return course.checkoutUrl ?? "#";
 }
