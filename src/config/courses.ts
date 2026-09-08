@@ -21,6 +21,21 @@ export interface CourseFaqItem {
   answer: string;
 }
 
+export interface CourseOffer {
+  /** Preço cheio — exibido riscado */
+  fullPrice: string;
+  /** Preço da oferta vigente */
+  offerPrice: string;
+  /** Parcelamento (opcional) */
+  installments?: string;
+  /** Selo de desconto (opcional, ex.: "50% OFF") */
+  discountBadge?: string;
+  /** Texto de urgência (opcional) */
+  urgencyText?: string;
+  /** Texto do botão de compra (opcional) */
+  ctaLabel?: string;
+}
+
 export interface Course {
   /** Identificador usado na URL: /curso/:slug */
   slug: string;
@@ -48,6 +63,8 @@ export interface Course {
   highlights: CourseCard[];
   /** Perguntas frequentes */
   faq: CourseFaqItem[];
+  /** Oferta vigente — se ausente, a seção não aparece */
+  offer?: CourseOffer;
   /** Metadados de SEO */
   meta: { title: string; description: string };
 }
@@ -172,6 +189,14 @@ export const courses: Course[] = [
           "Você tem 7 dias de garantia incondicional: se sentir que não é para você, basta solicitar o reembolso na Kiwify e devolvemos 100% do valor.",
       },
     ],
+    offer: {
+      fullPrice: "R$ 97,00",
+      offerPrice: "R$ 47,00",
+      installments: "",
+      discountBadge: "",
+      urgencyText: "Oferta  de lançamento por tempo limitado.",
+      ctaLabel: "Garantir minha vaga por R$ 47,00",
+    },
     meta: {
       title: "Lógica de Programação e Algoritmos — Ethos Cursos",
       description:

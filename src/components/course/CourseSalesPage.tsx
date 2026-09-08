@@ -332,6 +332,66 @@ function CourseModules({ course }: { course: Course }) {
   );
 }
 
+/* ---------- Oferta ---------- */
+function CourseOffer({ course }: { course: Course }) {
+  const offer = course.offer;
+  if (!offer) return null;
+
+  return (
+    <section id="oferta" className="bg-background pb-24 lg:pb-28">
+      <div className="mx-auto max-w-6xl px-5 lg:px-8">
+        <Reveal>
+          <div className="surface-navy relative overflow-hidden rounded-lg px-8 py-14 text-center lg:px-14">
+            <div
+              className="grid-lines pointer-events-none absolute inset-0 opacity-25"
+              aria-hidden="true"
+            />
+            <div className="relative mx-auto max-w-2xl">
+              {offer.discountBadge ? (
+                <span className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground">
+                  {offer.discountBadge}
+                </span>
+              ) : null}
+              <h2 className="mt-6 font-display text-3xl font-bold leading-[1.12] tracking-tight text-navy-foreground sm:text-4xl">
+                Oferta especial de lançamento
+              </h2>
+              <div className="mt-8">
+                <p className="text-lg text-navy-foreground/60">
+                  De{" "}
+                  <span className="line-through decoration-primary decoration-2">
+                    {offer.fullPrice}
+                  </span>{" "}
+                  por apenas
+                </p>
+                <p className="mt-2 font-display text-6xl font-bold tracking-tight text-primary sm:text-7xl">
+                  {offer.offerPrice}
+                </p>
+                {offer.installments ? (
+                  <p className="mt-2 text-sm text-navy-foreground/70">{offer.installments}</p>
+                ) : null}
+              </div>
+              <a
+                href={course.checkoutUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={actionVariants({ size: "lg" }) + " mt-10 w-full sm:w-auto"}
+              >
+                {offer.ctaLabel ?? course.ctaLabel ?? "Garantir minha vaga"}
+                <ArrowRight size={18} aria-hidden="true" />
+              </a>
+              {offer.urgencyText ? (
+                <p className="mx-auto mt-5 max-w-md text-xs leading-relaxed text-navy-foreground/55">
+                  {offer.urgencyText}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Diferenciais ---------- */
 function CourseHighlights({ course }: { course: Course }) {
   return (
@@ -684,6 +744,7 @@ export function CourseSalesPage({ course }: { course: Course }) {
         <CourseHero course={course} />
         <CourseAudience course={course} />
         <CourseModules course={course} />
+        <CourseOffer course={course} />
         <CourseHighlights course={course} />
         <CourseGuarantee />
         <CourseFaq course={course} />
