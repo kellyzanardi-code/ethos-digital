@@ -146,6 +146,7 @@ function CourseHeader({ course }: { course: Course }) {
             href={getCourseCheckoutUrl(course)}
             target="_blank"
             rel="noreferrer"
+            onClick={() => window.fbq?.("track", "InitiateCheckout")}
             className={actionVariants({ size: "sm" })}
           >
             {course.ctaLabel ?? "Garantir minha vaga"}
@@ -186,6 +187,7 @@ function CourseHeader({ course }: { course: Course }) {
             href={getCourseCheckoutUrl(course)}
             target="_blank"
             rel="noreferrer"
+            onClick={() => window.fbq?.("track", "InitiateCheckout")}
             className={cn(actionVariants({ size: "lg" }), "mt-5 w-full")}
           >
             {course.ctaLabel ?? "Garantir minha vaga"}
@@ -220,6 +222,7 @@ function CourseHero({ course }: { course: Course }) {
               href={getCourseCheckoutUrl(course)}
               target="_blank"
               rel="noreferrer"
+              onClick={() => window.fbq?.("track", "InitiateCheckout")}
               className={actionVariants({ size: "lg" })}
             >
               {course.ctaLabel ?? "Garantir minha vaga"}
@@ -377,6 +380,7 @@ function CourseOffer({ course }: { course: Course }) {
           href={getCourseCheckoutUrl(course)}
           target="_blank"
           rel="noreferrer"
+          onClick={() => window.fbq?.("track", "InitiateCheckout")}
           className={actionVariants({ size: "lg" }) + " mt-10 w-full sm:w-auto"}
         >
           {offer.ctaLabel ?? course.ctaLabel ?? "Garantir minha vaga"}
@@ -556,6 +560,7 @@ function CourseCta({ course }: { course: Course }) {
               href={getCourseCheckoutUrl(course)}
               target="_blank"
               rel="noreferrer"
+              onClick={() => window.fbq?.("track", "InitiateCheckout")}
               className={actionVariants({ size: "lg" })}
             >
               {course.ctaLabel ?? "Garantir minha vaga"} agora

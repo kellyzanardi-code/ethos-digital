@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
+import { PageViewTracker } from "@/components/site/PageViewTracker";
 
 function NotFoundComponent() {
   return (
@@ -31,6 +32,8 @@ function NotFoundComponent() {
           </Link>
         </div>
       </div>
+      <PageViewTracker />
+      <Outlet />
     </div>
   );
 }
