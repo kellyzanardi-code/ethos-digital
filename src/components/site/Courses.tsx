@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MonitorSmartphone } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -158,14 +158,18 @@ function CourseCard({ course }: { course: Course }) {
   const [open, setOpen] = useState(false);
   const isAvailable = course.status === "available";
 
-  const badge = (
-    <span
-      className={cn(
-        "inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.16em]",
-        isAvailable ? "bg-primary/15 text-primary" : "bg-gold/20 text-navy",
-      )}
-    >
-      {isAvailable ? "Matrículas abertas" : "Em breve"}
+  const badges = isAvailable ? (
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="inline-flex w-fit items-center gap-2 rounded-full bg-primary/15 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-primary">
+        Matrículas abertas
+      </span>
+      <span className="inline-flex w-fit items-center gap-2 rounded-full bg-gold/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy">
+        {course.format ?? "100% on-line"}
+      </span>
+    </div>
+  ) : (
+    <span className="inline-flex w-fit items-center gap-2 rounded-full bg-gold/20 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-navy">
+      Em breve
     </span>
   );
 
@@ -177,13 +181,21 @@ function CourseCard({ course }: { course: Course }) {
     </p>
   );
 
+  const delivery = (
+    <p className="mt-4 inline-flex items-center gap-2 text-xs font-medium text-muted-foreground">
+      <MonitorSmartphone size={15} className="text-primary" aria-hidden="true" />
+      Aulas 100% on-line — estude de onde quiser, no seu ritmo
+    </p>
+  );
+
   return (
     <article className="flex flex-col rounded-lg border border-border bg-card p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
       {isAvailable ? (
         <Link to="/curso/$slug" params={{ slug: course.slug }} className="flex h-full flex-col">
-          {badge}
+          {badges}
           {title}
           {text}
+          {delivery}
           <span className={actionVariants({ size: "md" }) + " mt-7 w-full"}>
             Ver página do curso
             <ArrowRight size={16} aria-hidden="true" />
@@ -191,9 +203,10 @@ function CourseCard({ course }: { course: Course }) {
         </Link>
       ) : (
         <>
-          {badge}
+          {badges}
           {title}
           {text}
+          {delivery}
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger className={actionVariants({ variant: "outlineDark" }) + " mt-7 w-full"}>
               Avise-me
@@ -219,7 +232,7 @@ export function Courses() {
         <SectionHeading
           eyebrow="Educação"
           title="Cursos práticos de tecnologia"
-          description="A Ethos Cursos está preparando cursos práticos, pensados para ajudar iniciantes a construir bases sólidas em programação e desenvolvimento web."
+          description="Cursos práticos de tecnologia, 100% on-line, para você aprender no seu ritmo — onde estiver, no computador ou no celular."
         />
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {courses.map((course) => (

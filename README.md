@@ -1,6 +1,6 @@
 # Ethos Digital
 
-Create a modern, professional, high-converting website for Ethos Cursos, a technology and digital education company that provides professional websites and strategic social media content for businesses, while preparing to launch online technology courses.
+Create a modern, professional, high-converting website for Ethos Cursos, a technology and digital education company that provides professional websites and strategic social media content for businesses, while preparing to launch on-line technology courses.
 
 Brand Identity and Visual Direction
 

@@ -53,8 +53,10 @@ export interface Course {
   name: string;
   /** "available" = tem página de venda no ar | "coming-soon" = em preparação */
   status: CourseStatus;
-  /** Selo exibido no topo do hero (ex.: "Curso 100% online") */
+  /** Selo exibido no topo do hero (ex.: "Curso 100% on-line") */
   badge: string;
+  /** Modalidade/formato do curso (ex.: "100% on-line") — exibida nos cards e no hero */
+  format?: string;
   /** Título principal do hero */
   headline: string;
   /** Subtítulo / descrição curta (também usada no card do site) */
@@ -84,13 +86,15 @@ export const courses: Course[] = [
     slug: "logica-algoritmos",
     name: "Lógica de Programação e Algoritmos",
     status: "available",
-    badge: "Curso 100% online",
+    badge: "Curso 100% on-line",
+    format: "100% on-line",
     headline: "Lógica de Programação e Algoritmos",
     description:
       "Aprenda a pensar de forma lógica, resolver problemas e construir a base necessária para se tornar uma pessoa desenvolvedora confiante.",
     checkoutUrl: "https://pay.kiwify.com.br/sVX5hU4",
     ctaLabel: "Garantir minha vaga",
     trustItems: [
+      "Aulas 100% on-line e gravadas",
       "Acesso vitalício",
       "Certificado de conclusão",
       "Suporte direto com o professor",
@@ -174,6 +178,11 @@ export const courses: Course[] = [
     ],
     faq: [
       {
+        question: "Como funcionam as aulas?",
+        answer:
+          "Todos os cursos da Ethos são 100% on-line: você assiste as aulas pela internet, no computador ou no celular, no seu ritmo e sem horário fixo.",
+      },
+      {
         question: "Nunca programei na vida. Consigo acompanhar?",
         answer:
           "Sim! O curso foi desenhado exatamente para iniciantes absolutos. Você começa pelo raciocínio lógico e avança passo a passo, sem precisar de nenhum conhecimento prévio.",
@@ -234,6 +243,7 @@ export const courses: Course[] = [
     name: "Introdução ao Desenvolvimento Web com HTML e CSS",
     status: "coming-soon",
     badge: "Em breve",
+    format: "100% on-line",
     headline: "Introdução ao Desenvolvimento Web com HTML e CSS",
     description:
       "Entenda a estrutura e a apresentação visual por trás dos sites modernos utilizando HTML e CSS.",
