@@ -3,8 +3,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   Code2,
   Facebook,
+  Github,
   GraduationCap,
   Instagram,
+  Linkedin,
   ListOrdered,
   Menu,
   MessageCircle,
@@ -49,7 +51,11 @@ export const Route = createFileRoute("/profdinho")({
           jobTitle: "Professor de TI e Arquiteto de Sistemas",
           description,
           url: "/profdinho",
-          sameAs: ["https://www.instagram.com/dinhozanardi/"],
+          sameAs: [
+            "https://www.instagram.com/dinhozanardi/",
+            "https://www.linkedin.com/in/edcleissonzanardi",
+            "https://github.com/profdinho",
+          ],
           worksFor: { "@type": "Organization", name: "Ethos Cursos", url: "/" },
         }),
       },
@@ -513,19 +519,38 @@ function CtaFinal() {
           title="Pronto para aprender tech que faz sentido?"
           description="Fale comigo, acompanhe o dia a dia ou conheça a Ethos Cursos."
         />
-        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <ActionLink href={whatsappLink} size="lg">
-            <MessageCircle size={18} aria-hidden="true" />
-            Falar no WhatsApp
-          </ActionLink>
-          <ActionLink
-            href="https://www.instagram.com/dinhozanardi/"
-            variant="outlineLight"
-            size="lg"
-          >
-            <Instagram className="h-4 w-4" aria-hidden="true" />
-            Seguir no Instagram
-          </ActionLink>
+        <div className="mt-9 flex flex-col items-center gap-3">
+          {/* Fileira 1 — conversão e rede pessoal */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <ActionLink href={whatsappLink} size="lg">
+              <MessageCircle size={18} aria-hidden="true" />
+              Falar no WhatsApp
+            </ActionLink>
+            <ActionLink
+              href="https://www.instagram.com/dinhozanardi/"
+              variant="outlineLight"
+              size="lg"
+            >
+              <Instagram size={18} aria-hidden="true" />
+              Seguir no Instagram
+            </ActionLink>
+          </div>
+
+          {/* Fileira 2 — perfis profissionais */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <ActionLink
+              href="https://www.linkedin.com/in/edcleissonzanardi"
+              variant="outlineLight"
+              size="lg"
+            >
+              <Linkedin size={18} aria-hidden="true" />
+              LinkedIn
+            </ActionLink>
+            <ActionLink href="https://github.com/profdinho" variant="outlineLight" size="lg">
+              <Github size={18} aria-hidden="true" />
+              GitHub
+            </ActionLink>
+          </div>
         </div>
         <p className="mt-6 text-sm text-navy-foreground/60">
           <a
@@ -616,6 +641,26 @@ function FooterProfdinho() {
               >
                 <MessageCircle className="h-4 w-4" />
                 <span>WhatsApp</span>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/edcleissonzanardi"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn do Professor Dinho"
+                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+              >
+                <Linkedin className="h-4 w-4" />
+                <span>LinkedIn</span>
+              </a>
+              <a
+                href="https://github.com/profdinho"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub do Professor Dinho"
+                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+              >
+                <Github className="h-4 w-4" />
+                <span>GitHub</span>
               </a>
             </div>
           </div>
