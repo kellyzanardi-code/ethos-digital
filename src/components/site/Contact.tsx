@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState, type FormEvent } from "react";
 import { MessageCircle } from "lucide-react";
 import { toast } from "sonner";
@@ -125,7 +126,10 @@ export function Contact() {
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 font-medium text-navy-foreground transition-colors hover:text-primary"
               >
-                WhatsApp: {siteConfig.whatsappNumber ? siteConfig.whatsappNumber : "a definir"}
+                <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                WhatsApp: {siteConfig.whatsappNumber
+                  ? `(${siteConfig.whatsappNumber.slice(2, 4)}) ${siteConfig.whatsappNumber.slice(4)}`
+                  : "a definir"}
               </a>
             </div>
           </div>

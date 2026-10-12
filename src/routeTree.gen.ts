@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProfdinhoRouteImport } from './routes/profdinho'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as CursoSlugRouteImport } from './routes/curso/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfdinhoRoute = ProfdinhoRouteImport.update({
+  id: '/profdinho',
+  path: '/profdinho',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -31,30 +37,34 @@ const CursoSlugRoute = CursoSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/profdinho': typeof ProfdinhoRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/curso/$slug': typeof CursoSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/profdinho': typeof ProfdinhoRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/curso/$slug': typeof CursoSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/profdinho': typeof ProfdinhoRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/curso/$slug': typeof CursoSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sitemap.xml' | '/curso/$slug'
+  fullPaths: '/' | '/profdinho' | '/sitemap.xml' | '/curso/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sitemap.xml' | '/curso/$slug'
-  id: '__root__' | '/' | '/sitemap.xml' | '/curso/$slug'
+  to: '/' | '/profdinho' | '/sitemap.xml' | '/curso/$slug'
+  id: '__root__' | '/' | '/profdinho' | '/sitemap.xml' | '/curso/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProfdinhoRoute: typeof ProfdinhoRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CursoSlugRoute: typeof CursoSlugRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profdinho': {
+      id: '/profdinho'
+      path: '/profdinho'
+      fullPath: '/profdinho'
+      preLoaderRoute: typeof ProfdinhoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProfdinhoRoute: ProfdinhoRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   CursoSlugRoute: CursoSlugRoute,
 }
