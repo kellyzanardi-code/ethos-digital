@@ -196,7 +196,13 @@ function HeroProfdinho() {
             <ActionLink href="#cursos-dinho" size="lg">
               Conhecer os cursos
             </ActionLink>
-            <ActionLink href={whatsappLink} variant="outlineLight" size="lg">
+            <ActionLink
+              href={whatsappLink}
+              variant="outlineLight"
+              size="lg"
+              target="_blank"
+              rel="noreferrer"
+            >
               <MessageCircle size={18} aria-hidden="true" />
               Falar no WhatsApp
             </ActionLink>
@@ -453,6 +459,8 @@ function CursosDinho() {
                 ) : (
                   <a
                     href={whatsappLink}
+                    target="_blank"
+                    rel="noreferrer"
                     className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:underline"
                   >
                     <MessageCircle size={15} aria-hidden="true" />
@@ -519,38 +527,50 @@ function CtaFinal() {
           title="Pronto para aprender tech que faz sentido?"
           description="Fale comigo, acompanhe o dia a dia ou conheça a Ethos Cursos."
         />
-        <div className="mt-9 flex flex-col items-center gap-3">
-          {/* Fileira 1 — conversão e rede pessoal */}
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <ActionLink href={whatsappLink} size="lg">
-              <MessageCircle size={18} aria-hidden="true" />
-              Falar no WhatsApp
-            </ActionLink>
-            <ActionLink
-              href="https://www.instagram.com/dinhozanardi/"
-              variant="outlineLight"
-              size="lg"
-            >
-              <Instagram size={18} aria-hidden="true" />
-              Seguir no Instagram
-            </ActionLink>
-          </div>
-
-          {/* Fileira 2 — perfis profissionais */}
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <ActionLink
-              href="https://www.linkedin.com/in/edcleissonzanardi"
-              variant="outlineLight"
-              size="lg"
-            >
-              <Linkedin size={18} aria-hidden="true" />
-              LinkedIn
-            </ActionLink>
-            <ActionLink href="https://github.com/profdinho" variant="outlineLight" size="lg">
-              <Github size={18} aria-hidden="true" />
-              GitHub
-            </ActionLink>
-          </div>
+        <div className="mx-auto mt-9 grid w-full max-w-lg gap-3 sm:grid-cols-2">
+          <ActionLink
+            href={whatsappLink}
+            size="lg"
+            className="w-full justify-center"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <MessageCircle size={18} aria-hidden="true" />
+            Falar no WhatsApp
+          </ActionLink>
+          <ActionLink
+            href="https://www.instagram.com/dinhozanardi/"
+            variant="outlineLight"
+            size="lg"
+            className="w-full justify-center"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Instagram size={18} aria-hidden="true" />
+            Seguir no Instagram
+          </ActionLink>
+          <ActionLink
+            href="https://www.linkedin.com/in/edcleissonzanardi"
+            variant="outlineLight"
+            size="lg"
+            className="w-full justify-center"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Linkedin size={18} aria-hidden="true" />
+            LinkedIn
+          </ActionLink>
+          <ActionLink
+            href="https://github.com/profdinho"
+            variant="outlineLight"
+            size="lg"
+            className="w-full justify-center"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Github size={18} aria-hidden="true" />
+            GitHub
+          </ActionLink>
         </div>
         <p className="mt-6 text-sm text-navy-foreground/60">
           <a

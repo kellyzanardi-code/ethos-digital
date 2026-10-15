@@ -73,6 +73,8 @@ export function Footer() {
 
               <a
                 href={whatsappLink}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-2 transition-colors hover:text-primary"
               >
                 <MessageCircle className="h-4 w-4" />

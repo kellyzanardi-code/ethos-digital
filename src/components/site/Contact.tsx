@@ -135,6 +135,8 @@ export function Contact() {
           </div>
           <a
             href={whatsappLink}
+            target="_blank"
+            rel="noreferrer"
             className={actionVariants({ variant: "outlineLight", size: "lg" }) + " mt-6"}
           >
             <MessageCircle size={18} aria-hidden="true" />

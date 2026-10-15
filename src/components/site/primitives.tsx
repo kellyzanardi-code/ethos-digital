@@ -14,8 +14,7 @@ export const actionVariants = cva(
           "bg-primary text-primary-foreground hover:brightness-110 hover:-translate-y-0.5 shadow-[var(--shadow-soft)]",
         outlineLight:
           "border border-navy-foreground/30 text-navy-foreground hover:border-primary hover:text-primary",
-        outlineDark:
-          "border border-navy/25 text-navy hover:border-primary hover:text-primary",
+        outlineDark: "border border-navy/25 text-navy hover:border-primary hover:text-primary",
         ghost: "text-navy hover:text-primary",
       },
       size: {
@@ -31,6 +30,8 @@ export const actionVariants = cva(
 type ActionProps = VariantProps<typeof actionVariants> & {
   className?: string;
   children: ReactNode;
+  target?: string;
+  rel?: string;
 };
 
 export function ActionLink({
@@ -39,9 +40,16 @@ export function ActionLink({
   size,
   className,
   children,
+  target,
+  rel,
 }: ActionProps & { href: string }) {
   return (
-    <a href={href} className={cn(actionVariants({ variant, size }), className)}>
+    <a
+      href={href}
+      target={target}
+      rel={rel}
+      className={cn(actionVariants({ variant, size }), className)}
+    >
       {children}
     </a>
   );
@@ -61,12 +69,7 @@ export function SectionHeading({
   align?: "left" | "center";
 }) {
   return (
-    <div
-      className={cn(
-        "max-w-3xl",
-        align === "center" && "mx-auto text-center",
-      )}
-    >
+    <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center")}>
       {eyebrow ? (
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
           {eyebrow}

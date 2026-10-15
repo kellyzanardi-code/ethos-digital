@@ -7,6 +7,7 @@ import { Process } from "@/components/site/Process";
 import { Courses } from "@/components/site/Courses";
 import { About } from "@/components/site/About";
 import { Trust } from "@/components/site/Trust";
+import { InstagramFeed } from "@/components/site/InstagramFeed";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 
@@ -54,6 +55,7 @@ function Index() {
         <Courses />
         <About />
         <Trust />
+        <InstagramFeed />
         <Contact />
       </main>
       <Footer />
