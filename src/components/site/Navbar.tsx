@@ -27,9 +27,7 @@ export function Navbar() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-navy/95 backdrop-blur border-b border-navy-foreground/10"
-          : "bg-transparent",
+        scrolled ? "bg-navy/95 backdrop-blur border-b border-navy-foreground/10" : "bg-transparent",
       )}
     >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 lg:px-8">
@@ -88,11 +86,7 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <ActionLink
-            href="#contato"
-            className="mt-5 w-full"
-            size="lg"
-          >
+          <ActionLink href="#contato" className="mt-5 w-full" size="lg">
             Fale com a Ethos
           </ActionLink>
         </div>
