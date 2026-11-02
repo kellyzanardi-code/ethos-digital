@@ -31,6 +31,8 @@ const columns = [
 ];
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="border-t border-navy-foreground/10 bg-navy-deep py-16 text-navy-foreground">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
@@ -105,7 +107,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-navy-foreground/10 pt-6 text-xs text-navy-foreground/50 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Ethos Cursos. Todos os direitos reservados.</p>
+          <p>© {currentYear} Ethos Cursos. Todos os direitos reservados.</p>
           <a href="#contato" className="hover:text-primary">
             Contato
           </a>
