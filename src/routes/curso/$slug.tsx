@@ -6,7 +6,18 @@ export const Route = createFileRoute("/curso/$slug")({
   component: CoursePage,
   head: ({ params }) => {
     const course = getCourseBySlug(params.slug);
-    if (!course) return { meta: [] };
+
+    if (!course) {
+      return {
+        meta: [
+          { title: "Curso não encontrado — Ethos Cursos" },
+          { name: "robots", content: "noindex" },
+        ],
+      };
+    }
+
+    const url = `https://ethoscursos.com.br/curso/${course.slug}`;
+
     return {
       meta: [
         { title: course.meta.title },
@@ -14,8 +25,10 @@ export const Route = createFileRoute("/curso/$slug")({
         { property: "og:title", content: course.meta.title },
         { property: "og:description", content: course.meta.description },
         { property: "og:type", content: "website" },
+        { property: "og:url", content: url },
         { name: "twitter:card", content: "summary_large_image" },
       ],
+      links: [{ rel: "canonical", href: url }],
     };
   },
 });

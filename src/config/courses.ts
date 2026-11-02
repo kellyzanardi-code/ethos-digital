@@ -245,8 +245,9 @@ export const courses: Course[] = [
       },
     ],
     meta: {
-      title: "",
-      description: "",
+      title: "Lógica de Programação e Algoritmos — Ethos Cursos",
+      description:
+        "Aprenda a pensar de forma lógica, resolver problemas e construir a base necessária para se tornar uma pessoa desenvolvedora confiante.",
     },
   },
   {
