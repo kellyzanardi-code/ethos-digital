@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ethos-cursos",
+  "compatibility_date": "2026-11-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "VITE_ACTIVE_OFFER_ID": "black-november",
+    "VITE_CONTACT_ENDPOINT": "https://ethoscursos.com.br/api/contact",
+    "VITE_CHECKOUT_URL_LOGICA_ALGORITMOS": "https://pay.kiwify.com.br/ia6umD3"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
