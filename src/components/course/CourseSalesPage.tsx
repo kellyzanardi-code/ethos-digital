@@ -36,6 +36,11 @@ const moduleIcons = [Brain, Code2, Boxes, GitBranch, Repeat, Rocket];
 const audienceIcons = [Target, Users, TrendingUp, Compass];
 const highlightIcons = [GraduationCap, Rocket, Sparkles, Code2];
 
+function getCtaLabel(course: Course): string {
+  const offer = getActiveOffer(course);
+  return offer?.ctaLabel ?? course.ctaLabel ?? "Garantir minha vaga";
+}
+
 function formatWhatsApp(digits: string): string {
   const ddd = digits.slice(2, 4);
   const main = digits.slice(4);
@@ -149,7 +154,7 @@ function CourseHeader({ course }: { course: Course }) {
             onClick={() => window.fbq?.("track", "InitiateCheckout")}
             className={actionVariants({ size: "sm" })}
           >
-            {course.ctaLabel ?? "Garantir minha vaga"}
+            {getCtaLabel(course)}
           </a>
         </div>
 
@@ -190,7 +195,7 @@ function CourseHeader({ course }: { course: Course }) {
             onClick={() => window.fbq?.("track", "InitiateCheckout")}
             className={cn(actionVariants({ size: "lg" }), "mt-5 w-full")}
           >
-            {course.ctaLabel ?? "Garantir minha vaga"}
+            {getCtaLabel(course)}
           </a>
         </div>
       ) : null}
@@ -225,7 +230,7 @@ function CourseHero({ course }: { course: Course }) {
               onClick={() => window.fbq?.("track", "InitiateCheckout")}
               className={actionVariants({ size: "lg" })}
             >
-              {course.ctaLabel ?? "Garantir minha vaga"}
+              {getCtaLabel(course)}
               <ArrowRight size={18} aria-hidden="true" />
             </a>
             <a
@@ -383,7 +388,7 @@ function CourseOffer({ course }: { course: Course }) {
           onClick={() => window.fbq?.("track", "InitiateCheckout")}
           className={actionVariants({ size: "lg" }) + " mt-10 w-full sm:w-auto"}
         >
-          {offer.ctaLabel ?? course.ctaLabel ?? "Garantir minha vaga"}
+          {getCtaLabel(course)}
           <ArrowRight size={18} aria-hidden="true" />
         </a>
         {offer.urgencyText ? (
@@ -563,7 +568,7 @@ function CourseCta({ course }: { course: Course }) {
               onClick={() => window.fbq?.("track", "InitiateCheckout")}
               className={actionVariants({ size: "lg" })}
             >
-              {course.ctaLabel ?? "Garantir minha vaga"} agora
+              {getCtaLabel(course)}
               <ArrowRight size={18} aria-hidden="true" />
             </a>
             <a

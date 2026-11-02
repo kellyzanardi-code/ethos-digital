@@ -232,6 +232,17 @@ export const courses: Course[] = [
         ctaLabel: "Garantir minha vaga por R$ 67,00",
         checkoutUrl: "https://pay.kiwify.com.br/kkaoe1B",
       },
+      {
+        id: "black-november",
+        label: "Black November",
+        fullPrice: "R$ 97,00",
+        offerPrice: "R$ 37,00",
+        installments: "",
+        discountBadge: "61% OFF",
+        urgencyText: "Oferta da Black November — só até 30/11.",
+        ctaLabel: "Garantir minha vaga na Black November",
+        checkoutUrl: "https://pay.kiwify.com.br/ia6umD3",
+      },
     ],
     meta: {
       title: "",
